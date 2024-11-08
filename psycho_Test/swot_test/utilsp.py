@@ -130,7 +130,7 @@ def generate_swot_report_final(responses):
         if weakness_obj:
             all_weaknesses.append({
                 "attribute": weakness_obj.attribute,
-                "waekness": weakness_obj.at_weakness
+                "weakness": weakness_obj.at_weakness
             })
 
     # Prepare final SWOT report

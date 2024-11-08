@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from .serializer import QuestionSerializer,StudentDetailSerializer
 from django.conf import settings
 from.utilsp import generate_swot_report_final
+from . utils import send_report_email
 from loguru import logger
 import json
 import boto3
@@ -91,6 +92,11 @@ class DwonloadreportView(APIView):
             student = StudentDetail.objects.get(email=student_email)
             student.pdf_link = s3_file_url
             student.save()
+            
+            # Send an email to the student with the download link
+            send_report_email(student_email,s3_file_url)
+            
+            
 
             # Return the download link
             return Response({"download_link": s3_file_url}, status=status.HTTP_200_OK)  

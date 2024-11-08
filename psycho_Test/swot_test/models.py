@@ -4,8 +4,10 @@ import uuid
 class StudentDetail(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(unique=True, null=True, blank=True)
-    phone =models.IntegerField(null=True )
-    alt_phone = models.IntegerField(null=True)
+    # phone =models.IntegerField(null=True)
+    # alt_phone = models.IntegerField(null=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)  # max_length can be adjusted as needed
+    alt_phone = models.CharField(max_length=15, null=True, blank=True)
     pdf_link = models.URLField(null=True, blank=True) 
     
     def __str__(self):

@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+ #cors header
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000", ]
 
 ROOT_URLCONF = 'psycho_Test.urls'
@@ -162,15 +163,25 @@ for handler in LOGURU_SETTINGS["handlers"]:
     logger.add(**handler)
     
     
+#Email handler
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_PORT =  os.getenv('EMAIL_PORT')   
+EMAIL_USE_TLS = True 
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # Your email address
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')    # Your email password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # Default from email address
+
+    
 # S3bucket 
 
-    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-    # AWS_DEFAULT_ACL = 'private'
-    AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+# AWS_DEFAULT_ACL = 'private'
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+AWS_S3_CUSTOM_DOMAIN = "AaraConsult.com"
     
-    AWS_S3_CUSTOM_DOMAIN = "AaraConsult.com"
     
-    
- #cors header

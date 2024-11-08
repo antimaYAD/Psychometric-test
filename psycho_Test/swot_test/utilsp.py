@@ -1,4 +1,6 @@
 from .models import CareerFields, StrengthWeakness
+from loguru import logger
+
 
 def generate_swot_report_final(responses):
     # Dictionary mapping question IDs to strengths/weaknesses
@@ -23,8 +25,7 @@ def generate_swot_report_final(responses):
     # List of responses (example format)
     yes_questions = [response["question_id"] for response in responses if response["selected_option"].lower() == "yes"]
     no_questions = [response["question_id"] for response in responses if response["selected_option"].lower() == "no"]
-    
-    print(yes_questions)
+
     
     # Categorize strengths and weaknesses based on the answers
     for question_id in yes_questions:
@@ -72,10 +73,11 @@ def generate_swot_report_final(responses):
         career_fields.append("Biotechnology/Biological Sciences")
     
     if 19 in yes_questions:
-        career_fields.append("Hotel management")
+        career_fields.append("Hotel Management")
     
     if 15 in yes_questions:
-        career_fields.append("Culinary arts, Hotel management")
+        career_fields.append("Culinary Arts") 
+        career_fields.append("Hotel Management")
     
     if 16 in yes_questions:
         career_fields.append("Design")
@@ -109,7 +111,7 @@ def generate_swot_report_final(responses):
                 'example2': fields.example2
             })
         except CareerFields.DoesNotExist:
-            print(f"Career field '{career}' not found in the database.")
+            logger.error(f"Career field '{career}' not found in the database.")
 
     # Initialize dictionary to store strength details
     all_strengths = []

@@ -127,57 +127,7 @@ class DwonloadreportView(APIView):
                 {"error": "An error occurred while processing the request."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-    # def post(self, request):
-        
-    #     print(request.data)
-        
-    #     # Extract the PDF file path and student email from the request data
-    #     pdf_file_path = request.data.get('pdf_file_path')
-    #     student_email = request.data.get('student_email')
-        
-    
-
-    #     # Validate the input
-    #     if not pdf_file_path or not student_email:
-    #         return Response(
-    #             {"error": "PDF file path and student email are required."},
-    #             status=status.HTTP_400_BAD_REQUEST
-    #         )
-
-    #     try:
-    #         # Verify if the student exists
-
-    #         # Upload the file to S3
-    #         s3 = boto3.client('s3', 
-    #                           aws_access_key_id=settings.AWS_ACCESS_KEY_ID, 
-    #                           aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY, 
-    #                           region_name=settings.AWS_S3_REGION_NAME)
-
-    #         file_name = pdf_file_path.split('/')[-1]  # Get the file name from the path
-    #         s3.upload_file(pdf_file_path, settings.AWS_STORAGE_BUCKET_NAME, file_name)
-
-    #         # Construct the S3 file URL
-    #         s3_file_url = f'https://{settings.AWS_S3_CUSTOM_DOMAIN}/{file_name}'
-
-    #         # Save the link to the student's record
-    #         student = StudentDetail.objects.get(email=student_email)
-    #         student.pdf_link = s3_file_url
-    #         student.save()
-            
-    #         # Send an email to the student with the download link
-    #         send_report_email(student_email,s3_file_url)
-            
-            
-
-    #         # Return the download link
-    #         return Response({"download_link": s3_file_url}, status=status.HTTP_200_OK)  
-    #     except StudentDetail.DoesNotExist:
-    #         return Response({"error": "Student with this email does not exist."}, status=status.HTTP_404_NOT_FOUND)
-    #     except Exception as error:
-    #         logger.error(f"Error uploading report: {error}")
-    #         return Response({"error": "An error occurred while uploading the report."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            
+   
             
 class StudentDetailView(APIView):
     def get(self, request):
@@ -190,3 +140,40 @@ class StudentDetailView(APIView):
         except Exception as error:
             logger.error(f"Error fetching student details: {error}")  # Log the error message
             return Response({"error": "An error occurred while fetching student details."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+    def destroy(self, request):
+        try:
+            data = request.data
+            student = StudentDetail.objects.get(id=data["id"])
+            
+            if student.pdf_link:
+            # Initialize a session using Amazon S3
+                s3_client = boto3.client(
+                    's3',
+                    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+                    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+                    region_name=settings.AWS_REGION
+                )
+                
+                # Extract the file key (assuming s3_file contains the file path)
+                file_key = student.s3_file.split('/')[-1]  # Adjust this if your S3 URL structure is different
+                
+                # Delete the file from S3
+                s3_client.delete_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=file_key)
+                logger.info(f"Deleted file {file_key} from S3 bucket.")
+            
+            # Now delete the student record from the database
+                student.delete()
+                logger.info(f"Deleted student record with id {data['id']}.")
+                
+            return Response({"message": "Student and associated file deleted successfully."}, status=status.HTTP_200_OK)
+
+        except StudentDetail.DoesNotExist:
+            logger.error(f"Student with ID {data['id']} does not exist.")
+            return Response({"error": "Student not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        except Exception as error:
+            logger.error(f"Error occurred while deleting student or file: {error}")
+            return Response({"error": "An error occurred while deleting student data."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                
+              

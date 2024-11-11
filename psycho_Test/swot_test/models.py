@@ -1,17 +1,21 @@
 from django.db import models
 import uuid
-
 class StudentDetail(models.Model):
-    name = models.CharField(max_length=255, null=True, blank=True)
-    email = models.EmailField(unique=True, null=True, blank=True)
-    # phone =models.IntegerField(null=True)
-    # alt_phone = models.IntegerField(null=True)
-    phone = models.CharField(max_length=15, null=True, blank=True)  # max_length can be adjusted as needed
+    name = models.CharField(max_length=255, blank=False)
+    email = models.EmailField(unique=True, blank=False)
+    phone = models.CharField(max_length=15, blank=False)  # max_length can be adjusted as needed
     alt_phone = models.CharField(max_length=15, null=True, blank=True)
-    pdf_link = models.URLField(null=True, blank=True) 
-    
+    alt_email = models.EmailField(max_length=255, blank=True)  # Increase max_length to 255 for emails
+    grade = models.CharField(max_length=255, blank=False,default="1")  # Removed default=None
+    school_name = models.TextField(max_length=225, blank=False,default="exampleschool")  # Removed default=None
+    pdf_link = models.URLField(null=True, blank=True)
+
     def __str__(self):
         return self.email
+    
+    
+    
+
 
     
 # Create your models here.

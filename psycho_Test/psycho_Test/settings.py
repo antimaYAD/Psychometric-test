@@ -96,8 +96,11 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
+     
     }
-}
+        
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -166,7 +169,7 @@ for handler in LOGURU_SETTINGS["handlers"]:
 #Email handler
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com' 
+EMAIL_HOST = 'xxx.xxx.xxx.xxx'
 EMAIL_PORT =  os.getenv('EMAIL_PORT')   
 EMAIL_USE_TLS = True 
 EMAIL_USE_SSL = False

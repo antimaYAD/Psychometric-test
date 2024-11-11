@@ -34,7 +34,6 @@ class SubmitResponsView(APIView):
             data = request.data
             user_details = data.get('user_detail')  # Use get to avoid KeyError
             responses = data.get('responses')
-            
             if not user_details or not responses:
                 return Response({"error": "Incomplete data provided."}, status=status.HTTP_400_BAD_REQUEST)
             
@@ -42,9 +41,12 @@ class SubmitResponsView(APIView):
           
             student = StudentDetail.objects.create(
                 name=user_details['name'],
-                email=user_details['email'],
+                grade=user_details['grade'],
+                school_name= user_details['school_name'],
                 phone=user_details['phone'],
-                alt_phone=user_details['alt_phone']
+                alt_phone=user_details['alt_phone'],
+                email=user_details['email'],
+                alt_email=user_details['alt_email'],
             )
             
             result = generate_swot_report_final(responses)
@@ -141,7 +143,7 @@ class StudentDetailView(APIView):
             logger.error(f"Error fetching student details: {error}")  # Log the error message
             return Response({"error": "An error occurred while fetching student details."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-    def destroy(self, request):
+    def delete(self, request):
         try:
             data = request.data
             student = StudentDetail.objects.get(id=data["id"])
@@ -152,11 +154,11 @@ class StudentDetailView(APIView):
                     's3',
                     aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                     aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                    region_name=settings.AWS_REGION
+                    region_name=settings.AWS_S3_REGION_NAME
                 )
                 
                 # Extract the file key (assuming s3_file contains the file path)
-                file_key = student.s3_file.split('/')[-1]  # Adjust this if your S3 URL structure is different
+                file_key = student.pdf_link.split('/')[-1]  # Adjust this if your S3 URL structure is different
                 
                 # Delete the file from S3
                 s3_client.delete_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=file_key)

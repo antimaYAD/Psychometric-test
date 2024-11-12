@@ -296,7 +296,6 @@ fields_data = [
     },
     
 
-
     {
         'field_name': 'Psychology',
         'description': 'Psychology can be defined as the scientific discipline that focuses on the human mind and its functions and activities. It covers a vast area of interest in students, including but not limited to cognition, affective processes, growth and development, individual differences, and interpersonal relationships. It seeks to define how people practically experience the world, not only in relation to ideas but also feelings and actions, as well as the psychology behind these donations. Clinical and social Psychologists employ research techniques like experiments, questionnaires, and observations in order to generate hypotheses relevant to peoples behavior.',
@@ -343,7 +342,7 @@ fields_data = [
         'strength_weakness': 'NULL'
     },
     {
-        'field_name': 'Design, Filmmaking',
+        'field_name': 'Design',
         'description': 'Design as a field includes various disciplines, such as Communication, Product, and Fashion design, which shape our visual culture and immersive experiences. Designers craft visual identities, products, and environments that resonate with audiences, blending aesthetics, functionality, and user experience to evoke emotions and convey messages. Designers push the boundaries of creativity, innovation, and expression, enriching our lives with beauty, meaning, and inspiration.',
         'opportunity': 'Emerging technologies enabling innovative storytelling, global distribution via streaming platforms.',
         'threat': 'High competition due to content volume, difficult recognition for new creators.',
@@ -368,6 +367,26 @@ fields_data = [
         'example1': 'A coach maintains the performance of the player by going through his performance analytics.',
         'example2': 'In sports management, overseeing the logistics of organizing a major sporting event involves coordinating venue arrangements, teams, and event logistics.',
         'strength_weakness': 'Sports'
+    },
+    
+    {
+        "field_name": "Engineering",
+        "description": "Engineering is a vast and diverse discipline that applies mathematics and science to develop solutions for real-life challenges across fields such as construction, machinery, and technology. Major branches include civil, mechanical, electrical, chemical, and computer engineering, all of which focus on innovation and improvement of products and systems. Engineering professionals contribute significantly to sectors like infrastructure, production, technology, and healthcare, enhancing the quality and functionality of everyday life.",
+        "opportunity": "Advances in AI, robotics, and nanotechnology, along with sustainable energy system design.",
+        "threat": "Rapidly evolving technology requires constant learning and adaptation.",
+        "example1": "A mechanical engineer designing a new machine prototype.",
+        "example2": "A civil engineer overseeing the construction of bridges and highways.",
+        "strength_weakness": "Tech Savvy"
+    },
+    
+    {
+        "field_name": "Film and Cinematics",
+        "description": "Film and Cinematics explores the art, history, theory, and technical aspects of filmmaking, including camera work, editing, sound, and storytelling. This field values creativity, technical skills, cultural understanding, and the power of film as a social and artistic medium. It includes roles such as cinematographer, director, producer, and scriptwriter, who work to produce compelling visual stories and advance film techniques.",
+        "opportunity": "Integration of VR, AR, and AI to enhance cinematic experiences, along with expanding global streaming distribution.",
+        "threat": "Intense competition driven by content saturation in the digital age.",
+        "example1": "A director creating a short film using VR technology.",
+        "example2": "A filmmaker experimenting with augmented reality to create immersive cinematic experiences.",
+        "strength_weakness": "Creative"
     }
 ]
 

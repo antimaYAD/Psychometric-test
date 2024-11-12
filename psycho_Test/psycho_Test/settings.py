@@ -169,7 +169,7 @@ for handler in LOGURU_SETTINGS["handlers"]:
 #Email handler
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'xxx.xxx.xxx.xxx'
+EMAIL_HOST = 'smtp.gmail.com' 
 EMAIL_PORT =  os.getenv('EMAIL_PORT')   
 EMAIL_USE_TLS = True 
 EMAIL_USE_SSL = False

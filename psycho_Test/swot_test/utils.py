@@ -1,12 +1,12 @@
 from .models import Question,CareerFields,StrengthWeakness
 from django.core.mail import send_mail
 from django.conf import settings
-def send_report_email(email,url):
+def send_report_email(name,url):
     subject =  "SWOT Analysis Report"
-    Message = f"""Thank you for taking the test.
-    Please download your SWOT Analysis Report from 
-     click here : {url}."""
-    send_mail(subject, Message, settings.EMAIL_HOST_USER, [email])
+    Message = f"""{name} has take the following swot test and there is the report
+                   download link.
+                   click here to download : {url}"""
+    send_mail(subject, Message, settings.EMAIL_HOST_USER, ["vinni.aaraconsultancy@gmail.com","aaraconsultancy2019@gmail.com"])
     
     return print("Email sent successfully.")
 
